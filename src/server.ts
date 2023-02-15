@@ -1,13 +1,18 @@
 // ESM
 import Fastify from 'fastify'
+import { PrismaClient } from '@prisma/client';
 
 const app = Fastify({
   logger: true
 });
 
+const prisma = new PrismaClient()
+
 // Declare a route
-app.get('/', function (request, reply) {
-  reply.send({ hello: 'world' })
+app.get('/', async (request, reply) => {
+
+  const pessoas = await prisma.pessoa.findFirst()
+  reply.send(pessoas)
 })
 
 // Run the server!

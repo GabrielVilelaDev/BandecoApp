@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model TipoVeiculo {
+  Id           Int     @id @default(autoincrement())
+  Descricao    String
+  QtdeLugares  Int
+  veiculos     Veiculo[]
+}
+
+model Pessoa {
+  Id        Int     @id @default(autoincrement())
+  Nome      String
+  Apelido   String
+  Celular   String
+  Veiculo   Veiculo[]
+  PessoaReserva PessoaReserva[]
+}
+
+model Veiculo {
+  Id            Int        @id @default(autoincrement())
+  TipoVeiculo   TipoVeiculo  @relation(fields: [IdTipoVeiculo], references: [Id])
+  IdTipoVeiculo Int
+  Motorista     Pessoa     @relation(fields: [IdMotorista], references: [Id])
+  IdMotorista   Int
+  Apelido       String
+  Reserva       Reserva[]
+}
+
+model Reserva {
+  Id                       Int       @id @default(autoincrement())
+  Veiculo                  Veiculo   @relation(fields: [IdVeiculo], references: [Id])
+  IdVeiculo                Int
+  QtdeLugaresOcupados      Int
+  DataHoraSaida            DateTime
+  DataReserva              DateTime
+  DataHoraChegadaPrevista  DateTime
+  Tolerancia               Float
+  PessoaReserva            PessoaReserva[]
+}
+
+model PessoaReserva {
+  Id        Int      @id @default(autoincrement())
+  Pessoa    Pessoa   @relation(fields: [IdPessoa], references: [Id])
+  IdPessoa  Int
+  Reserva   Reserva  @relation(fields: [IdReserva], references: [Id])
+  IdReserva Int
+}
