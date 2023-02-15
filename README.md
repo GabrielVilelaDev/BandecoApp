@@ -13,7 +13,8 @@ O sistema foi projetado para ser uma arquitetura de sistemas distribuídos onde 
 
 
 ### Entidades
-![Diagrama de Entidades BandecoApp](https://user-images.githubusercontent.com/79611025/218912165-bd340f6b-49df-4d50-93c6-a2f6c85edd3b.png)
+![Diagrama de Entidades BandecoApp](https://user-images.githubusercontent.com/79611025/218929025-f3e7179b-46ac-4e57-8826-e155e920575c.png)
+
 
 ### Arquitetura
 ![Diagrama arquitetura aplicação bandecoapp](https://user-images.githubusercontent.com/79611025/218912212-1c22bd24-a758-4cd2-ae9a-5d22dc020a33.png)
