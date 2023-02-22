@@ -1,4 +1,4 @@
-import { Pessoa } from "@prisma/client";
+import { Pessoa, Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma";
 import { PessoaDtoInputSchema } from "../schema/pessoa";
 
@@ -17,13 +17,13 @@ export async function getAllPessoas()
     }
 }
 
-export async function getPessoaById(id: number)
+export async function getPessoaById(id: string)
 {
     try
     {
         const pessoa = await prisma.pessoa.findUnique({
             where:{
-                Id: id
+                Id: parseInt(id, 10)
             }
         })
 
@@ -31,13 +31,11 @@ export async function getPessoaById(id: number)
     }
     catch(err)
     {
-        throw err
+        throw new Error("Erro ao encontrar usuário.")
     }
 }
 
-export async function postPessoa(
-    data: PessoaDtoInputSchema
-)
+export async function postPessoa(data: PessoaDtoInputSchema)
 {
     try
     {
@@ -57,3 +55,43 @@ export async function postPessoa(
     }
 }
 
+export async function putPessoaById(id: string, data: PessoaDtoInputSchema)
+{
+    try
+    {
+        const pessoa = await prisma.pessoa.update({
+            where:{
+                Id: parseInt(id, 10)
+            },
+            data: {
+                Nome: data.nome,
+                Apelido: data.apelido,
+                Celular: data.celular
+            }
+        });
+
+        return pessoa
+    }
+    catch(err)
+    {
+        throw new Error("Erro ao atualizar cadastro de usuário.")
+    }
+}
+
+export async function deletePessoaById(id: string)
+{
+    try
+    {
+        const pessoa = await prisma.pessoa.delete({
+            where:{
+                Id: parseInt(id, 10)
+            }
+        })
+
+        return pessoa
+    }
+    catch(err)
+    {
+        throw new Error("Erro ao excluir cadastro de usuário.")
+    }
+}

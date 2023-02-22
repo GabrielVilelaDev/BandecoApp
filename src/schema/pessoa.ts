@@ -7,4 +7,8 @@ export const pessoaDtoInputSchema = z.object({
     celular: z.string(),
 })
 
+export const pessoaIdDtoInputSchema = z.object({
+    id: z.string(),
+})
+
 export type PessoaDtoInputSchema = z.infer<typeof pessoaDtoInputSchema>;
